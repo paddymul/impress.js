@@ -1,0 +1,334 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>impress.js | presentation tool based on the power of CSS3 transforms and transitions in modern browsers | by Bartek Szopka @bartaz</title>
+    
+    <meta name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com." />
+    <meta name="author" content="Bartek Szopka" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <link href="css/impress-demo.css" rel="stylesheet" />
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<!--
+    
+    Now that's the core element used by impress.js.
+    
+    That's the wrapper for your presentation steps. In this element
+    all the impress.js magic happens.  It doesn't have to be a
+    `<div>`. Only `id` is important here as that's how the script find
+    it.
+    
+    You probably won't need it now, but there are some configuration
+    options that can be set on this element.
+    
+    To change the duration of the transition between slides use
+    `data-transition-duration="2000"` giving it a number of ms. It
+    defaults to 1000 (1s).
+    
+    You can also control the perspective with `data-perspective="500"`
+    giving it a number of pixels.  It defaults to 1000. You can set it
+    to 0 if you don't want any 3D effects.  If you are willing to
+    change this value make sure you understand how CSS perspective
+    works: https://developer.mozilla.org/en/CSS/perspective
+    
+    But as I said, you won't need it for now, so don't worry - there
+    are some simple but interesing things right around the corner of
+    this tag ;)
+    
+-->
+<div id="impress">
+
+    <!--
+        
+        Here is where interesting thing start to happen.
+        
+        Each step of the presentation should be an element inside the
+        `#impress` with a class name of `step`. These step elements
+        are positioned, rotated and scaled by impress.js, and the
+        'camera' shows them on each step of the presentation.
+        
+        Positioning information is passed through data attributes.
+        
+        In the example below we only specify x and y position of the
+        step element with `data-x="-1000"` and `data-y="-1500`
+        attributes. This means that **the center** of the element
+        (yes, the center) will be positioned in point x = -1000px and
+        y = -1500px of the presentation 'canvas'.
+        
+        It will not be rotated or scaled.
+        
+    -->
+    <style>
+      code, pre { background: black; color: green; 
+                  font-family:monospace; font-size:20px; line-height:25px; padding:20px;}
+
+      h1 { height:40px; margin: 10px auto;  text-align:center; width: 50%; b order:1px solid red;} 
+      h1 span {text-align:center;}
+      table {width:100%}
+      td, th {text-align:center; }
+    </style>
+    <div id="Introduction" class="step slide" data-x="-2000" data-y="2000">
+      <h1> Introduction </h1>
+      <h2> Who Am I </h2>
+      <p> I am paddy mullen </p>
+      <a href="http://paddymullen.com">paddy@paddymullen.com</a>
+    </div>
+
+    <div class="step slide" data-x="-2000" data-y="3000"> 
+      <h1> The project </h1>
+      <p> Indexing wikipedia on a single machine as a test of performance </p>
+    </div>
+
+    <div class="step slide" data-x="-2000" data-y="4000"> 
+      <h1> Background </h1>
+      <p> have followed solr for 4+ years </p>
+      <p> started this implementation in February </p>
+      <p> 2012 </p>
+    </div>
+    <div id="Why-this-matters" class="step slide" data-x="-500" data-y="2000">
+      <h1> Why this matters </h1>
+      <ul>
+        <li> Quick to get running </li>
+        <li> Relateable (everyone knows wikipedia) </li>
+        <li> Generality of the dataset </li>
+        <li> Hackable </li>
+      </ul>
+    </div>
+
+    <div class="step slide" data-x="-500" data-y="3000">
+      <h1> Quick to get running </h1>
+      <pre>
+~/ $ git clone  git@github.com:General-Cybernetics/wikipedia_solr.git
+~/wikipedia_solr (master) $ cd wikipedia_solr
+~/wikipedia_solr (master) $ ./apps/update/update_all
+~/wikipedia_solr (master) $ ./apps/update/download_dump
+~/wikipedia_solr (master) $ open ./apps/start_solr 
+~/wikipedia_solr (master) $ ./apps/reindex/index_1_000
+      </pre>
+    </div>
+
+    <div class="step slide" data-x="-500" data-y="4000">
+      <h1> Relateable </h1>
+      <ul> 
+        <li>Everyone knows Wikipedia </li>
+        <li> no need to come up with contrived queries </li>
+        <li> It is fairly clear how it is similar to your own data </li>
+      </ul>
+    </div>
+    <div class="step slide" data-x="-500" data-y="5000">
+      <h1> Hackable </h1>
+      <p> Built ontop of git submodules </p>
+      <p> let's run it against trunk instead of v3 </p>
+      <pre>
+
+~/wikipedia_solr (master) $ cd lib/solr
+~/wikipedia_solr/lib/solr (branch_3x) $ git checkout master; git pull
+~/wikipedia_solr/lib/solr (master) $ cd ../..
+~/wikipedia_solr (master) $ ./apps/update/recompile_all
+~/wikipedia_solr (master) $ open ./apps/start_solr 
+~/wikipedia_solr (master) $ ./apps/reindex/index_1_000
+      </pre>
+
+    </div>
+    <div id="Who-is-this-for" class="step slide" data-x="1000" data-y="2000" data-scale="1">
+      <h1> Who is this for </h1>
+      <ul>
+        <li> People new to Solr </li>
+        <li> Planning stage projects </li>
+      </ul>
+      <h1> Who is this not for </h1>
+      <ul>
+        <li> twitter style apps </li>
+        <li> realtime apps </li>
+      </ul>
+    </div>
+
+    <div  class="step slide" data-x="1000" data-y="3000"> 
+      <h1> Comparing your data to Wikipedia </h1>
+      <ul>
+        <li> 12 million articles </li>
+        <li> 33Gb on disk </li>
+        <li> 5 million meaningful docs </li>
+      </ul>
+    </div>
+
+    <div  class="step slide" data-x="1000" data-y="4000"> 
+      <h1> Quality of comparison </h1>
+      <ul>
+        <li> Absolutely perfect if you want to index Wikipedia </li>
+        <li> The closer your corpus is to Wikipedia corpus, the better </li>
+        <li> Good idea of ec2 limits </li>
+        <li> Should get you within an order of magnitude of performance results from your system </li>
+      </ul>
+    </div>
+
+    <div id="Indexing-setup" class="step slide" data-x="2500" data-y="2000" data-scale="1">
+      <h1> Indexing setup </h1>
+      <ul>
+        <li> Dataimport handler </li>
+        <li> JWPL to parse mediawiki markup </li>
+        <li> modified data import handler to allow reads from named pipes </li>
+      </ul>
+    </div>
+
+    <div  class="step slide" data-x="2500" data-y="3000" data-scale="1">
+      <h1> Schema.xml </h1>
+      <pre>
+
+        &lt;field name="id" 
+            type="int"  indexed="true" stored="true" required="true"/&gt;
+        &lt;field name="title"             
+            type="string"   indexed="true"   stored="true"/&gt;
+        &lt;field name="articlePlainTextCount"  
+            type="int"  indexed="true"   stored="true" required="false"/&gt;
+        &lt;field name="wikimediaMarkupCount"   
+            type="int"  indexed="true"   stored="true" required="false"/&gt;
+        &lt;field name="markupPlainRatio"  
+            type="float"  indexed="true"   stored="true" required="false"/&gt;
+        &lt;field name="error"            
+            type="text_general"  indexed="true"   stored="true"  /&gt; 
+
+        &lt;field name="articlePlainText"   
+            type="text_general" indexed="true"   stored="false"  /&gt; 
+        &lt;field name="sectionParsed"      
+            type="string" indexed="false"  stored="true" compressed="true"  /&gt; 
+        &lt;field name="wikimediaMarkup"    
+            type="text_general" indexed="false"  stored="false"  /&gt;
+      </pre>
+    </div>
+
+    <div  class="step slide" data-x="2500" data-y="4000" data-scale="1">
+      <h1> index performance </h1>
+      
+      <table>
+        <thead>
+          <tr>
+            <th> Articles indexed </th> <th> Macbook pro </th> 
+            <th>m1.small</th> <th> c1.xlarge</th>  <th> c1.xlarge EBS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 1k </td> <td> 41s </td> <td> X </td>  <td> X </td> <td> X </td>
+          </tr>
+          <tr>
+            <td> 10k </td> <td> 4m </td> <td> X </td> <td> X </td> <td> X </td>
+          </tr>
+          <tr>
+            <td> 100k </td> <td> 45m </td> <td> X </td> <td> X </td> <td> X </td>
+          </tr>
+          <tr>
+            <td> 12m </td> <td> 16h </td> <td> X </td> <td> X </td> <td> X </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div style="width:500px; height:300px; border: 2px solid blue; background:gray">
+        GRAPH PLACEHOLDER
+      </div>
+
+    </div>
+    <div class="step slide" data-x="2500" data-y="5000" data-scale="1">
+      <h1> Java setup / machine setup </h1>
+      <ul>
+        <li>    -Xms512M -Xmx1024M </li>
+        <li> spinning rust on macbook pro </li>
+        <li> ethereal storage on m1.small </li>
+        <li> ebs and ethereal storage tested on c1.xlarge </li>
+      </ul>
+    </div>
+
+
+    <div id="query-performance" class="step slide" data-x="5000" data-y="2000" data-scale="1">
+      <h1> Query Performance </h1>
+      <ul>
+        <li>  A mix of queries </li>
+        <li> single term query </li>
+        <li> double word phrase </li>
+        <li> three word phrase </li>
+        <li> two single words ANDED </li>
+        <li> two double word phrases ANDED </li>
+        <li> add your own </li>
+
+      </ul>
+    </div>
+
+
+    <div  class="step slide" data-x="2500" data-y="4000" data-scale="1">
+      <h1> index performance macbook pro</h1>
+      
+      <table>
+        <thead>
+          <tr>
+            <th> Articles Indexed </th> 
+            <th> <a href="http://localhost:8983/solr/select/?q=articlePlainText%3Aamerican&version=2.2&start=0&rows=10&indent=on"> 1 word </a> </th> 
+            <th> <a href="http://localhost:8983/solr/select/?q=articlePlainText%3A%22american+samoa%22&version=2.2&start=0&rows=10&indent=on">2 word phrase</a></th> 
+            <th> <a href="http://localhost:8983/solr/select/?q=articlePlainText%3A%22unified+continental+model%22&version=2.2&start=0&rows=10&indent=on">3 word phrase</a> </th>  
+
+            <th> <a href="http://localhost:8983/solr/select/?q=+articlePlainText%3Aamerican+AND++_query_%3A%22articlePlainText%3Asamoa%22&version=2.2&start=0&rows=10&indent=on"> 2 word and </a></th>  <th> <a href="http://localhost:8983/solr/select/?q=+articlePlainText%3A%22american+samoa%22+AND++_query_%3A%22articlePlainText%3A%27cook+islands%27%22&version=2.2&start=0&rows=10&indent=on">double word phrase ANDED </a> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 1k </td> <td> 54ms </td> <td> 2ms </td>  <td> 2ms </td> <td> 12ms </td><td> 2ms </td>
+          </tr>
+          <tr>
+            <td> 10k </td> <td> 62ms </td> <td> 105ms </td> <td> 64ms </td> <td> 61ms </td> <td> 63ms </td>
+          </tr>
+          <tr>
+            <td> 100k </td> <td> X </td> <td> X </td> <td> X </td> <td> X </td>
+          </tr>
+          <tr>
+            <td> 12m </td> <td> X </td> <td> X </td> <td> X </td> <td> X </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div style="width:500px; height:300px; border: 2px solid blue; background:gray">
+        GRAPH PLACEHOLDER
+      </div>
+
+    </div>
+
+    <div id="query-performance" class="step slide" data-x="8000" data-y="3000" data-scale="1">
+      <h1> Questions </h1>
+    </div>
+
+
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+</body>
+</html>
+
